@@ -102,6 +102,34 @@ export class CSV {
                 return
         }
 
+        console.log("\n=== TABLA DE PRODUCTOS ===")
+        console.log("ID\t| Producto\t| Stock\t| Precio")
+        console.log("----------------------------------------")
         
+        for (const prod of productos) {
+            console.log(`${prod.ID}\t| ${prod.Producto}\t| ${prod.Stock}\t| $${prod.Precio}`)
+        }
+        console.log("----------------------------------------\n")
+    }
+
+
+    async listarCSV() {
+        try {
+            const archivos = await fs.readdir(this.carpeta)
+            const csvs = archivos.filter(archivo => archivo.endsWith('.csv'))
+
+            if(csvs.length === 0){
+                console.log("No hay ningun archivo CSV en la carpeta")
+                return
+            }
+
+            console.log("\n----- ARCHIVOS CSV DISPONIBLES -----")
+            csvs.forEach((archivo, index) => {
+                console.log(`${index + 1}. ${archivo}`)
+            })
+            console.log("-------------------------------------\n")
+        } catch (error){
+            console.log("Errorr epico al querer listar los archivos CSV, error: ", error.message)
+        }
     }
 }
